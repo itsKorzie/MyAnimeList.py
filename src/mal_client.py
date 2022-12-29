@@ -1,4 +1,4 @@
-from fun import get_anime_details, get_seasonal_anime, ranking, search, key_file, informations
+from fun import get_anime_details, get_seasonal_anime, ranking, search, key_file, informations, update, delete, list, suggestion
 from oauth2 import pcke, user_auth, server, get_token, refresh
 import os.path
 
@@ -44,4 +44,15 @@ class Client():
     def my_informations(self):
         return informations.get_my_informations(self.ACCESS_TOKEN)
 
+    def add(self,type, id, **kwargs):
+        return update.update_list(self.ACCESS_TOKEN, type, id, kwargs)
+
+    def delete(self, type, id):
+        return delete.delete(self.ACCESS_TOKEN, type, id)
+
+    def get_list(self, type, user_name, **kwargs):
+        return list.get_user_list(self.ACCESS_TOKEN, type, user_name, kwargs)
+
+    def suggested(self, type, limit=100, offset=0, fields=''):
+        return suggestion.get_suggested(self.ACCESS_TOKEN, type, limit, offset, fields)
 
