@@ -1,12 +1,8 @@
 import requests
+import webbrowser
 
 
-def get_token(client_id, code_challenge):
-    parameters = {
-        'response_type': 'code',
-        'client_id': client_id,
-        'code_challenge': code_challenge
-    }
+def open_web(client_id, code_challenge):
+    url = 'https://myanimelist.net/v1/oauth2/authorize' + '?response_type=code' + '&client_id=' + client_id + '&code_challenge=' + code_challenge + '&state=RequestID42'
+    webbrowser.open(url, new=1)
 
-    response = requests.get('https://myanimelist.net/v1/oauth2/token', data = parameters)
-    return (response.status_code, response.text)

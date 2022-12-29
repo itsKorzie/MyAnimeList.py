@@ -1,1 +1,4 @@
-import mal_client
+from mal_client import *
+
+
+
