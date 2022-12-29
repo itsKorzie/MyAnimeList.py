@@ -1,7 +1,7 @@
 import requests
 
 def get_seasonal_anime(url,client_id, year, season, sort, limit, offset, fields):
-    url = url + 'fun/season/' + str(year) + '/' + season
+    url = f'{url}fun/season/{str(year)}/{season}'
 
     parameters = {
         'sort': sort,

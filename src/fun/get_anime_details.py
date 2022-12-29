@@ -2,7 +2,7 @@ import requests
 
 
 def get_anime_details(url,client_id, type, id, fields=''):
-    url = url + type + '/' + str(id)
+    url = f'{url}{type}/{str(id)}'
     parameters = {
         'fields': fields
     }

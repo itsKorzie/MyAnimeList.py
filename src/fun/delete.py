@@ -1,7 +1,7 @@
 import requests
 
 def delete(access_token, type, id):
-    url = 'https://api.myanimelist.net/v2/' + type + '/' + str(id) + '/my_list_status'
+    url = f'https://api.myanimelist.net/v2/{type}/{id}/my_list_status'
     headers = {
         'Authorization': 'Bearer ' + access_token,
     }

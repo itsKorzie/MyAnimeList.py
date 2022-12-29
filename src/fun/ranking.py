@@ -1,7 +1,7 @@
 import requests
 
 def get_ranking(url, client_id, type, ranking_type, limit=100, offset=0, fields=''):
-    url = url + type + '/ranking'
+    url = f'{url}{type}/ranking'
     parameters = {
         'ranking_type': ranking_type,
         'limit': limit,

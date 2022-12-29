@@ -12,7 +12,7 @@ def search_anime(client_id, url, type, q, limit = 100, offset = 0, fields = ''):
     :param fields: infos you want to get
     :return:
     '''
-    url = url + type
+    url = f'{url}{type}'
     parameters = {
         'q': q,
         'limit': limit,
