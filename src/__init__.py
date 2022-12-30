@@ -1,1 +1,1 @@
-from mal_client import *
+from myanimelist import *
