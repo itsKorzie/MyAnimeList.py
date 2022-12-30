@@ -9,6 +9,7 @@ class Serv(BaseHTTPRequestHandler):
             code = self.path[7:-18]
             file = open('keys.py', 'w')
             file.write(code)
+            file.close()
         else:
             pass
 

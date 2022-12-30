@@ -1,10 +1,11 @@
-from fun import get_anime_details, get_seasonal_anime, ranking, search, key_file, informations, update, delete, list, suggestion
+from fun import get_anime_details, get_seasonal_anime, ranking, search, key_file, informations, update, delete, list, suggestion, forum
 from oauth2 import pcke, user_auth, server, get_token, refresh
 import os.path
 
 class Client():
     def __init__(self, client_id, client_secret='', oauth=False, refresh_key=False):
         self.client_id = client_id
+        self.client_secret = client_secret
         self.url = 'https://api.myanimelist.net/v2/'
         if oauth:
             file_exist = os.path.exists('keys.py')
@@ -16,6 +17,7 @@ class Client():
                 self.REFRESH_TOKEN = keys.REFRESH_TOKEN
                 if refresh_key:
                     self.ACCESS_TOKEN, self.REFRESH_TOKEN = refresh.refresh_keys(self.client_id,client_secret, self.REFRESH_TOKEN)
+                    key_file.make_key_file(self.client_id, self.pcke_token, self.code, self.ACCESS_TOKEN, self.REFRESH_TOKEN)
             else:
                 print('‼️No keys file found, new connection...')
                 self.pcke_token = pcke.get_new_code_verifier()
@@ -25,7 +27,7 @@ class Client():
                 file = open('keys.py', 'r')
                 self.code = file.read()
                 file.close()
-                self.ACCESS_TOKEN, self.REFRESH_TOKEN = get_token.get_token(self.client_id, client_secret, self.code, self.pcke_token)
+                self.ACCESS_TOKEN, self.REFRESH_TOKEN = get_token.get_token(self.client_id, self.code, self.pcke_token, self.client_secret)
                 key_file.make_key_file(self.client_id, self.pcke_token, self.code, self.ACCESS_TOKEN, self.REFRESH_TOKEN)
                 print('✔️Keys.py created')
 
@@ -56,3 +58,15 @@ class Client():
     def suggested(self, type, limit=100, offset=0, fields=''):
         return suggestion.get_suggested(self.ACCESS_TOKEN, type, limit, offset, fields)
 
+    def forum_board(self):
+        return forum.get_forum_board(self.client_id)
+
+    def topic_details(self, topic_id, limit=100, offset=0):
+        return forum.get_topic_details(self.client_id, topic_id, limit, offset)
+
+    def forum_topics(self, **kwargs):
+        return forum.get_forum_topics(self.client_id, kwargs)
+
+    def refresh(self):
+        self.ACCESS_TOKEN, self.REFRESH_TOKEN = refresh.refresh_keys(self.client_id, self.client_secret, self.REFRESH_TOKEN)
+        key_file.make_key_file(self.client_id, self.pcke_token, self.code, self.ACCESS_TOKEN, self.REFRESH_TOKEN)
